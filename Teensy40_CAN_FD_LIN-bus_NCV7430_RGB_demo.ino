@@ -27,8 +27,8 @@ unsigned long interval = 200000;   // interval at which to blinkLED to run every
 #define SET_LED_CONTROL 0x23
 #define SET_LED_COLOUR  0x24
 
-LIN lin(&Serial3, 19200);
-
+//LIN lin(&Serial3, 19200);
+LIN lin;
 int lin_cs = 32;
 
 int led1 = 23;
@@ -44,9 +44,13 @@ void setup() {
   pinMode(lin_fault,INPUT);
   pinMode(lin_cs, OUTPUT);
   digitalWrite(lin_cs, HIGH);
-  delay(100);
-  pinMode(led1,OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
   
+  lin.begin(&Serial3, 19200);
+
+  delay(1000);
+  pinMode(led1,OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
 
   Serial.begin(115200);
   Serial.print("NVC7430 RGB Demo");
